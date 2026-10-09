@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dashboard - Academic Record System</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+
+    <style>
+      /* =====================================
+           DASHBOARD LAYOUT
+        ===================================== */
+
+      .dashboard-layout {
+        display: flex;
+        min-height: 100vh;
+        background: #f5f7fb;
+      }
+
+      /* =====================================
+           SIDEBAR
+        ===================================== */
+
+      .sidebar {
+        width: 240px;
+        background: #1e3a8a;
+        color: white;
+        padding: 25px 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow-y: auto;
+      }
+
+      .sidebar-logo {
+        text-align: center;
+        padding-bottom: 25px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .sidebar-logo h2 {
+        font-size: 20px;
+      }
+
+      .sidebar-logo p {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+
+      .sidebar-menu {
+        margin-top: 25px;
+      }
+
+      .sidebar-menu a {
+        display: block;
+        color: white;
+        padding: 12px 15px;
+        margin-bottom: 6px;
+        border-radius: 6px;
+        transition: 0.3s;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background: #172554;
+      }
+
+      .logout-btn {
+        margin-top: 25px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid white;
+        border-radius: 6px;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+      }
+
+      .logout-btn:hover {
+        background: white;
+        color: #1e3a8a;
+      }
+
+      /* =====================================
+           MAIN CONTENT
+        ===================================== */
+
+      .dashboard-main {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+        padding: 30px;
+      }
+
+      /* =====================================
+           TOP BAR
+        ===================================== */
+
+      .top-bar {
+        background: white;
+        padding: 18px 25px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .top-bar h1 {
+        color: #1e3a8a;
+        font-size: 25px;
+      }
+
+      .user-info {
+        text-align: right;
+      }
+
+      .user-info strong {
+        display: block;
+      }
+
+      .user-info span {
+        color: #6b7280;
+        font-size: 13px;
+      }
+
+      /* =====================================
+           SUMMARY CARDS
+        ===================================== */
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .summary-card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .summary-card h3 {
+        font-size: 14px;
+        color: #6b7280;
+        margin-bottom: 10px;
+      }
+
+      .summary-card .number {
+        font-size: 30px;
+        font-weight: bold;
+        color: #1e3a8a;
+      }
+
+      /* =====================================
+           CONTENT GRID
+        ===================================== */
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+      }
+
+      .dashboard-card {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .dashboard-card h2 {
+        color: #1e3a8a;
+        margin-bottom: 20px;
+        font-size: 20px;
+      }
+
+      /* =====================================
+           TABLE
+        ===================================== */
+
+      .dashboard-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .dashboard-table th,
+      .dashboard-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .dashboard-table th {
+        color: #374151;
+        background: #f8fafc;
+      }
+
+      /* =====================================
+           SWA CARD
+        ===================================== */
+
+      .swa-box {
+        text-align: center;
+        padding: 20px;
+      }
+
+      .swa-value {
+        font-size: 50px;
+        font-weight: bold;
+        color: #1e3a8a;
+      }
+
+      .standing {
+        display: inline-block;
+        padding: 8px 15px;
+        margin-top: 10px;
+        border-radius: 20px;
+        background: #dbeafe;
+        color: #1e3a8a;
+        font-weight: bold;
+      }
+
+      /* =====================================
+           QUICK ACTIONS
+        ===================================== */
+
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+
+      .quick-action {
+        padding: 18px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        text-align: center;
+        transition: 0.3s;
+      }
+
+      .quick-action:hover {
+        background: #eff6ff;
+        border-color: #1e3a8a;
+      }
+
+      .quick-action h3 {
+        color: #1e3a8a;
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+
+      .quick-action p {
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+      @media (max-width: 1000px) {
+        .summary-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .sidebar {
+          position: relative;
+          width: 100%;
+        }
+
+        .dashboard-layout {
+          display: block;
+        }
+
+        .dashboard-main {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .quick-actions {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="dashboard-layout">
+      <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <h2>Academic Record</h2>
+
+          <p>Management System</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="dashboard.html" class="active"> Dashboard </a>
+
+          <a href="students.html"> Students </a>
+
+          <a href="courses.html"> Courses </a>
+
+          <a href="registration.html"> Registration </a>
+
+          <a href="marks.html"> Marks </a>
+
+          <a href="swa.html"> SWA Calculation </a>
+
+          <a href="reports.html"> Academic Reports </a>
+        </nav>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </aside>
+
+      <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+      <main class="dashboard-main">
+        <!-- TOP BAR -->
+
+        <div class="top-bar">
+          <div>
+            <h1>Dashboard</h1>
+
+            <p>Student Academic Record Management</p>
+          </div>
+
+          <div class="user-info">
+            <strong id="userName"> User </strong>
+
+            <span id="userRole"> Academic Office </span>
+          </div>
+        </div>
+
+        <!-- =====================================
+             SUMMARY CARDS
+        ====================================== -->
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h3>Total Students</h3>
+
+            <div class="number" id="studentCount">0</div>
+          </div>
+
+          <div class="summary-card">
+            <h3>Total Courses</h3>
+
+            <div class="number" id="courseCount">0</div>
+          </div>
+
+          <div class="summary-card">
+            <h3>Registered Courses</h3>
+
+            <div class="number" id="registrationCount">0</div>
+          </div>
+
+          <div class="summary-card">
+            <h3>Reports Generated</h3>
+
+            <div class="number" id="reportCount">0</div>
+          </div>
+        </div>
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+
+        <div class="content-grid">
+          <!-- RECENT STUDENTS -->
+
+          <div class="dashboard-card">
+            <h2>Recent Students</h2>
+
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Roll No</th>
+                  <th>Name</th>
+                  <th>Semester</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody id="recentStudents"><tr><td colspan="4">Loading students...</td></tr></tbody>
+            </table>
+          </div>
+
+          <!-- SWA -->
+
+          <div class="dashboard-card">
+            <h2>Academic Performance</h2>
+
+            <div class="swa-box">
+              <p>Current Semester SWA</p>
+
+              <div class="swa-value" id="currentSWA">82.73</div>
+
+              <div class="standing" id="academicStanding">
+                Normal Academic Standing
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================
+             QUICK ACTIONS
+        ====================================== -->
+
+        <div class="dashboard-card" style="margin-top: 25px">
+          <h2>Quick Actions</h2>
+
+          <div class="quick-actions">
+            <a href="students.html" class="quick-action">
+              <h3>Manage Students</h3>
+
+              <p>Add, update and view students</p>
+            </a>
+
+            <a href="courses.html" class="quick-action">
+              <h3>Manage Courses</h3>
+
+              <p>Add and manage courses</p>
+            </a>
+
+            <a href="marks.html" class="quick-action">
+              <h3>Enter Marks</h3>
+
+              <p>Record student marks</p>
+            </a>
+
+            <a href="registration.html" class="quick-action">
+              <h3>Registration</h3>
+
+              <p>Register courses</p>
+            </a>
+
+            <a href="swa.html" class="quick-action">
+              <h3>Calculate SWA</h3>
+
+              <p>Calculate semester average</p>
+            </a>
+
+            <a href="reports.html" class="quick-action">
+              <h3>Generate Report</h3>
+
+              <p>View academic report</p>
+            </a>
+
+            <a
+              href="staff-accounts.html"
+              class="quick-action"
+              id="manageStaffAction"
+              hidden
+            >
+              <h3>Manage Staff Accounts</h3>
+
+              <p>Create Faculty and Course Administrator accounts</p>
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

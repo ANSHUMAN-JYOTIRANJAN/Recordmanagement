@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Add Course - Academic Record System</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f7fb;
+      }
+
+      /* =================================
+           LAYOUT
+        ================================= */
+
+      .page-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 240px;
+        background: #1e3a8a;
+        color: white;
+        padding: 25px 15px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .sidebar-logo {
+        text-align: center;
+        padding-bottom: 25px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .sidebar-logo h2 {
+        font-size: 20px;
+        margin: 0 0 5px;
+      }
+
+      .sidebar-logo p {
+        font-size: 12px;
+        opacity: 0.8;
+        margin: 0;
+      }
+
+      .sidebar-menu {
+        margin-top: 25px;
+      }
+
+      .sidebar-menu a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 12px 15px;
+        margin-bottom: 6px;
+        border-radius: 6px;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background: #172554;
+      }
+
+      .logout-btn {
+        margin-top: 25px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid white;
+        border-radius: 6px;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+      }
+
+      /* =================================
+           MAIN CONTENT
+        ================================= */
+
+      .page-main {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+        padding: 30px;
+      }
+
+      .page-header {
+        background: white;
+        padding: 22px 25px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .page-header h1 {
+        margin: 0 0 6px;
+        color: #1e3a8a;
+      }
+
+      .page-header p {
+        margin: 0;
+        color: #6b7280;
+      }
+
+      /* =================================
+           FORM CARD
+        ================================= */
+
+      .form-card {
+        max-width: 800px;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .form-title {
+        margin-top: 0;
+        color: #1e3a8a;
+        margin-bottom: 25px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        color: #374151;
+        margin-bottom: 7px;
+      }
+
+      .required {
+        color: #dc2626;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #1e3a8a;
+      }
+
+      .form-group textarea {
+        min-height: 180px;
+        resize: vertical;
+      }
+
+      .help-text {
+        margin-top: 5px;
+        color: #6b7280;
+        font-size: 12px;
+      }
+
+      /* =================================
+           BUTTONS
+        ================================= */
+
+      .button-section {
+        display: flex;
+        gap: 12px;
+        margin-top: 10px;
+      }
+
+      .submit-btn {
+        padding: 12px 25px;
+        background: #1e3a8a;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .submit-btn:hover {
+        background: #172554;
+      }
+
+      .cancel-btn {
+        padding: 12px 25px;
+        background: #e5e7eb;
+        color: #374151;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .cancel-btn:hover {
+        background: #d1d5db;
+      }
+
+      /* =================================
+           SUCCESS MESSAGE
+        ================================= */
+
+      .success-message {
+        display: none;
+        padding: 14px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+      }
+
+      .error-message {
+        display: none;
+        padding: 14px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+      }
+
+      /* =================================
+           COURSE PREVIEW
+        ================================= */
+
+      .preview-card {
+        margin-top: 25px;
+        background: #eff6ff;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #1e3a8a;
+      }
+
+      .preview-card h3 {
+        color: #1e3a8a;
+        margin-top: 0;
+      }
+
+      .preview-item {
+        margin-bottom: 8px;
+      }
+
+      .preview-item span {
+        color: #6b7280;
+      }
+
+      /* =================================
+           RESPONSIVE
+        ================================= */
+
+      @media (max-width: 800px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-group.full-width {
+          grid-column: auto;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .sidebar {
+          position: relative;
+          width: 100%;
+        }
+
+        .page-layout {
+          display: block;
+        }
+
+        .page-main {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .button-section {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-layout">
+      <!-- =================================
+         SIDEBAR
+    ================================= -->
+
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <h2>Academic Record</h2>
+
+          <p>Management System</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="dashboard.html"> Dashboard </a>
+
+          <a href="students.html"> Students </a>
+
+          <a href="courses.html" class="active"> Courses </a>
+
+          <a href="registration.html"> Registration </a>
+
+          <a href="marks.html"> Marks </a>
+
+          <a href="swa.html"> SWA Calculation </a>
+
+          <a href="reports.html"> Academic Reports </a>
+        </nav>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </aside>
+
+      <!-- =================================
+         MAIN CONTENT
+    ================================= -->
+
+      <main class="page-main">
+        <!-- HEADER -->
+
+        <div class="page-header">
+          <h1>Add New Course</h1>
+
+          <p>Add a new academic course to the Course Master.</p>
+        </div>
+
+        <!-- =================================
+             FORM
+        ================================= -->
+
+        <div class="form-card">
+          <h2 class="form-title">Course Information</h2>
+          <p id="coursePermissionNotice" hidden>
+            Course creation is limited to Academic Office and Course
+            Administrator accounts.
+          </p>
+
+          <!-- SUCCESS MESSAGE -->
+
+          <div class="success-message" id="successMessage">
+            Course added successfully.
+          </div>
+
+          <!-- ERROR MESSAGE -->
+
+          <div class="error-message" id="errorMessage">
+            Please fill all required fields.
+          </div>
+
+          <form id="courseForm">
+            <div class="form-grid">
+              <!-- COURSE NUMBER -->
+
+              <div class="form-group">
+                <label for="courseNo">
+                  Course Number
+                  <span class="required">*</span>
+                </label>
+
+                <input
+                  type="text"
+                  id="courseNo"
+                  placeholder="Example: CS301"
+                  required
+                />
+
+                <div class="help-text">Course number must be unique.</div>
+              </div>
+
+              <!-- COURSE NAME -->
+
+              <div class="form-group">
+                <label for="courseName">
+                  Course Name
+                  <span class="required">*</span>
+                </label>
+
+                <input
+                  type="text"
+                  id="courseName"
+                  placeholder="Example: Database Management System"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="courseSemester">
+                  Semester
+                  <span class="required">*</span>
+                </label>
+                <select id="courseSemester" required>
+                  <option value="">Select Semester</option>
+                  <option value="1">Semester 1</option>
+                  <option value="2">Semester 2</option>
+                  <option value="3">Semester 3</option>
+                  <option value="4">Semester 4</option>
+                  <option value="5">Semester 5</option>
+                  <option value="6">Semester 6</option>
+                  <option value="7">Semester 7</option>
+                  <option value="8">Semester 8</option>
+                </select>
+              </div>
+
+              <!-- CREDITS -->
+
+              <div class="form-group">
+                <label for="credits">
+                  Credits
+                  <span class="required">*</span>
+                </label>
+
+                <input
+                  type="number"
+                  id="credits"
+                  min="1"
+                  max="10"
+                  placeholder="Example: 4"
+                  required
+                />
+
+                <div class="help-text">
+                  Enter the number of credits assigned to the course.
+                </div>
+              </div>
+
+              <!-- COURSE TYPE -->
+
+              <div class="form-group">
+                <label for="courseType"> Course Type </label>
+
+                <select id="courseType">
+                  <option value="Core">Core</option>
+
+                  <option value="Elective">Elective</option>
+
+                  <option value="Laboratory">Laboratory</option>
+
+                  <option value="Project">Project</option>
+                </select>
+              </div>
+
+              <!-- SYLLABUS -->
+
+              <div class="form-group full-width">
+                <label for="syllabus">
+                  Syllabus
+                  <span class="required">*</span>
+                </label>
+
+                <textarea
+                  id="syllabus"
+                  placeholder="Enter the course syllabus, units, topics and important contents..."
+                  required
+                >
+                </textarea>
+
+                <div class="help-text">
+                  Provide the syllabus or major topics covered in the course.
+                </div>
+              </div>
+            </div>
+
+            <!-- BUTTONS -->
+
+            <div class="button-section">
+              <button type="submit" class="submit-btn">Add Course</button>
+
+              <button type="button" class="cancel-btn" onclick="cancelForm()">
+                Cancel
+              </button>
+            </div>
+          </form>
+
+          <!-- =================================
+                 PREVIEW
+            ================================= -->
+
+          <div class="preview-card" id="previewCard" style="display: none">
+            <h3>Course Preview</h3>
+
+            <div class="preview-item">
+              <span> Course Number: </span>
+
+              <strong id="previewCourseNo"> - </strong>
+            </div>
+
+            <div class="preview-item">
+              <span> Course Name: </span>
+
+              <strong id="previewCourseName"> - </strong>
+            </div>
+
+            <div class="preview-item">
+              <span> Semester: </span>
+
+              <strong id="previewSemester"> - </strong>
+            </div>
+
+            <div class="preview-item">
+              <span> Credits: </span>
+
+              <strong id="previewCredits"> - </strong>
+            </div>
+
+            <div class="preview-item">
+              <span> Course Type: </span>
+
+              <strong id="previewCourseType"> - </strong>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- =================================
+     JAVASCRIPT
+================================= -->
+
+    
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Students - Academic Record System</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+
+    <style>
+      /* ================================
+           PAGE LAYOUT
+        ================================= */
+
+      .page-layout {
+        display: flex;
+        min-height: 100vh;
+        background: #f5f7fb;
+      }
+
+      .sidebar {
+        width: 240px;
+        background: #1e3a8a;
+        color: white;
+        padding: 25px 15px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .sidebar-logo {
+        text-align: center;
+        padding-bottom: 25px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .sidebar-logo h2 {
+        font-size: 20px;
+      }
+
+      .sidebar-logo p {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+
+      .sidebar-menu {
+        margin-top: 25px;
+      }
+
+      .sidebar-menu a {
+        display: block;
+        color: white;
+        padding: 12px 15px;
+        margin-bottom: 6px;
+        border-radius: 6px;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background: #172554;
+      }
+
+      .logout-btn {
+        margin-top: 25px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid white;
+        border-radius: 6px;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+      }
+
+      /* ================================
+           MAIN CONTENT
+        ================================= */
+
+      .page-main {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+        padding: 30px;
+      }
+
+      .page-header {
+        background: white;
+        padding: 22px 25px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .page-header h1 {
+        color: #1e3a8a;
+        margin-bottom: 5px;
+      }
+
+      .page-header p {
+        color: #6b7280;
+      }
+
+      /* ================================
+           ACTION BAR
+        ================================= */
+
+      .action-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        gap: 15px;
+      }
+
+      .search-box {
+        flex: 1;
+      }
+
+      .search-box input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        outline: none;
+      }
+
+      .search-box input:focus {
+        border-color: #1e3a8a;
+      }
+
+      .add-btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        background: #1e3a8a;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .add-btn:hover {
+        background: #172554;
+      }
+
+      /* ================================
+           TABLE
+        ================================= */
+
+      .table-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+      }
+
+      .student-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .student-table th,
+      .student-table td {
+        padding: 13px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+      }
+
+      .student-table th {
+        background: #f8fafc;
+        color: #374151;
+      }
+
+      .student-table tr:hover {
+        background: #f8fafc;
+      }
+
+      /* ================================
+           STATUS
+        ================================= */
+
+      .status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .status-active {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .status-inactive {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* ================================
+           ACTION BUTTONS
+        ================================= */
+
+      .action-btn {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 5px;
+        font-size: 12px;
+      }
+
+      .view-btn {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .edit-btn {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .delete-btn {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* ================================
+           MODAL
+        ================================= */
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        width: 90%;
+        max-width: 500px;
+        padding: 30px;
+        border-radius: 10px;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .modal-header h2 {
+        color: #1e3a8a;
+      }
+
+      .close-btn {
+        border: none;
+        background: none;
+        font-size: 25px;
+        cursor: pointer;
+      }
+
+      /* ================================
+           FORM
+        ================================= */
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 12px;
+        background: #1e3a8a;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      /* ================================
+           RESPONSIVE
+        ================================= */
+
+      @media (max-width: 700px) {
+        .sidebar {
+          position: relative;
+          width: 100%;
+        }
+
+        .page-layout {
+          display: block;
+        }
+
+        .page-main {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .action-bar {
+          flex-direction: column;
+        }
+
+        .search-box {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-layout">
+      <!-- ================================
+         SIDEBAR
+    ================================= -->
+
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <h2>Academic Record</h2>
+
+          <p>Management System</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="dashboard.html"> Dashboard </a>
+
+          <a href="students.html" class="active"> Students </a>
+
+          <a href="courses.html"> Courses </a>
+
+          <a href="registration.html"> Registration </a>
+
+          <a href="marks.html"> Marks </a>
+
+          <a href="swa.html"> SWA Calculation </a>
+
+          <a href="reports.html"> Academic Reports </a>
+        </nav>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </aside>
+
+      <!-- ================================
+         MAIN CONTENT
+    ================================= -->
+
+      <main class="page-main">
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+          <h1>Student Management</h1>
+
+          <p>Add, view, update and manage student academic records.</p>
+        </div>
+
+        <!-- ================================
+             ACTION BAR
+        ================================= -->
+
+        <div class="action-bar">
+          <div class="search-box">
+            <input
+              type="text"
+              id="searchStudent"
+              placeholder="Search by roll number or name..."
+            />
+          </div>
+
+          <button
+            class="add-btn"
+            id="addStudentButton"
+            onclick="openStudentModal()"
+          >
+            + Add Student
+          </button>
+          <p id="studentPermissionNotice" hidden>
+            Adding and editing students is limited to Academic Office and
+            Course Administrator accounts.
+          </p>
+        </div>
+
+        <!-- ================================
+             STUDENT TABLE
+        ================================= -->
+
+        <div class="table-card">
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Roll Number</th>
+
+                <th>Name</th>
+
+                <th>Address</th>
+
+                <th>Semester</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="studentTableBody"><tr><td colspan="6">Loading students...</td></tr></tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <!-- ================================
+     ADD STUDENT MODAL
+================================= -->
+
+    <div class="modal" id="studentModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add Student</h2>
+
+          <button class="close-btn" onclick="closeStudentModal()">×</button>
+        </div>
+
+        <form id="studentForm">
+          <div class="form-group">
+            <label for="rollNo"> Roll Number </label>
+
+            <input
+              type="text"
+              id="rollNo"
+              placeholder="Enter roll number"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="studentName"> Student Name </label>
+
+            <input
+              type="text"
+              id="studentName"
+              placeholder="Enter student name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="address"> Address </label>
+
+            <input
+              type="text"
+              id="address"
+              placeholder="Enter address"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="semester"> Semester </label>
+
+            <select id="semester" required>
+              <option value="">Select Semester</option>
+
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+              <option value="7">Semester 7</option>
+              <option value="8">Semester 8</option>
+            </select>
+          </div>
+
+          <button type="submit" class="submit-btn">Add Student</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================================
+     JAVASCRIPT
+================================= -->
+
+    
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

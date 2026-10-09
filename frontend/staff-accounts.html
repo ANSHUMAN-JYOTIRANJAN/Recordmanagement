@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Staff Accounts - Student Academic Record System</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <style>
+      .staff-page {
+        min-height: calc(100vh - 75px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5f7fb;
+        padding: 40px 20px;
+      }
+
+      .staff-card {
+        width: 100%;
+        max-width: 520px;
+        background: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .staff-card h1 {
+        text-align: center;
+        color: #1e3a8a;
+        margin-bottom: 8px;
+      }
+
+      .staff-card .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 25px;
+      }
+
+      .staff-card .form-group {
+        margin-bottom: 18px;
+      }
+
+      .staff-button {
+        width: 100%;
+        padding: 13px;
+        border: 0;
+        border-radius: 6px;
+        background: #1e3a8a;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .staff-button:disabled {
+        cursor: wait;
+        opacity: 0.7;
+      }
+
+      .staff-message {
+        display: none;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <h2>Student Academic Record</h2>
+          <span>Management System</span>
+        </div>
+        <nav>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="staff-page">
+      <section class="staff-card">
+        <h1>Create Staff Account</h1>
+        <p class="subtitle">
+          Academic Office can create Faculty and Course Administrator accounts.
+        </p>
+        <form id="staffAccountForm">
+          <div class="form-group">
+            <label for="name">Full name</label>
+            <input id="name" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="role">Staff role</label>
+            <select id="role" required>
+              <option value="Faculty">Faculty</option>
+              <option value="Course Administrator">Course Administrator</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="password">Temporary password (at least 8 characters)</label>
+            <input
+              id="password"
+              type="password"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+          <button class="staff-button" type="submit">Create Staff Account</button>
+          <div id="staffAccountMessage" class="staff-message" role="status"></div>
+        </form>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/staff-accounts.js"></script>
+  </body>
+</html>

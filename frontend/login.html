@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Login - Student Academic Record System</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+      /* Login Page */
+
+      .login-page {
+        min-height: calc(100vh - 75px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5f7fb;
+        padding: 40px 20px;
+      }
+
+      .login-card {
+        width: 100%;
+        max-width: 450px;
+        background: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .login-card h1 {
+        text-align: center;
+        color: #1e3a8a;
+        margin-bottom: 8px;
+      }
+
+      .login-card .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+        color: #374151;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 15px;
+        outline: none;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: #1e3a8a;
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 13px;
+        border: none;
+        border-radius: 6px;
+        background: #1e3a8a;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .login-button:hover {
+        background: #172554;
+      }
+
+      .login-message {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 14px;
+      }
+
+      .back-home {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #1e3a8a;
+      }
+
+      .demo-info {
+        margin-top: 25px;
+        padding: 15px;
+        background: #eff6ff;
+        border-radius: 6px;
+        font-size: 13px;
+        color: #374151;
+      }
+    </style>
+    <link rel="stylesheet" href="css/forms.css" />
+  </head>
+  <body>
+    <!-- Header -->
+
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <h2>Student Academic Record</h2>
+          <span>Management System</span>
+        </div>
+
+        <nav>
+          <a href="index.html">Home</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Login Section -->
+
+    <main class="login-page">
+      <div class="login-card">
+        <h1>Login</h1>
+
+        <p class="subtitle">Access your academic record</p>
+
+        <form id="loginForm">
+          <!-- Email -->
+
+          <div class="form-group">
+            <label for="email"> Email </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <!-- Password -->
+
+          <div class="form-group">
+            <label for="password"> Password </label>
+
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <!-- Role -->
+
+          <div class="form-group">
+            <label for="role"> Login As </label>
+
+            <select id="role" name="role" required>
+              <option value="">Select Role</option>
+
+              <option value="Student">Student</option>
+
+              <option value="Faculty">Faculty</option>
+
+              <option value="Course Administrator">Course Administrator</option>
+
+              <option value="Academic Office">Academic Office</option>
+            </select>
+          </div>
+
+          <!-- Login Button -->
+
+          <button type="submit" class="login-button">Login</button>
+
+          <!-- Login Message -->
+
+          <div id="loginMessage" class="login-message"></div>
+        </form>
+
+        <p class="login-message">
+          Don't have an account? <a href="register.html">Create one</a>
+        </p>
+
+        <!-- Temporary information -->
+
+        <div class="demo-info">
+          <strong>System Roles</strong>
+
+          <p>Student: View academic records and reports.</p>
+
+          <p>Faculty: Enter and manage student marks.</p>
+
+          <p>Course Administrator: Manage courses.</p>
+
+          <p>Academic Office: Manage academic records and reports.</p>
+        </div>
+
+        <a href="index.html" class="back-home"> ← Back to Home </a>
+      </div>
+    </main>
+
+    <!-- JavaScript -->
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
+</html>

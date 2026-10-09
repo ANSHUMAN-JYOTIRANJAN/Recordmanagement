@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account - Student Academic Record System</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <style>
+      .register-page {
+        min-height: calc(100vh - 75px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5f7fb;
+        padding: 40px 20px;
+      }
+
+      .register-card {
+        width: 100%;
+        max-width: 450px;
+        background: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .register-card h1 {
+        text-align: center;
+        color: #1e3a8a;
+        margin-bottom: 8px;
+      }
+
+      .register-card .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 25px;
+      }
+
+      .register-card .form-group {
+        margin-bottom: 18px;
+      }
+
+      .register-button {
+        width: 100%;
+        padding: 13px;
+        border: 0;
+        border-radius: 6px;
+        background: #1e3a8a;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .register-button:disabled {
+        cursor: wait;
+        opacity: 0.7;
+      }
+
+      .register-message {
+        display: none;
+        margin-top: 15px;
+        text-align: center;
+        color: #b91c1c;
+        font-size: 14px;
+      }
+
+      .register-footer {
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <h2>Student Academic Record</h2>
+          <span>Management System</span>
+        </div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="login.html">Login</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="register-page">
+      <section class="register-card">
+        <h1>Create Account</h1>
+        <p class="subtitle">Create a student account, then log in.</p>
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="name">Full name</label>
+            <input id="name" name="name" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="rollNo">Student roll number</label>
+            <input id="rollNo" name="rollNo" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="address">Address (for a new student record)</label>
+            <input id="address" name="address" autocomplete="street-address" />
+          </div>
+          <div class="form-group">
+            <label for="semester">Current semester (for a new student record)</label>
+            <select id="semester" name="semester">
+              <option value="">Select semester</option>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+              <option value="7">Semester 7</option>
+              <option value="8">Semester 8</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              minlength="6"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+          <button class="register-button" type="submit">Create Account</button>
+          <div id="registerMessage" class="register-message" role="alert"></div>
+        </form>
+        <p class="register-footer">
+          Already have an account? <a href="login.html">Log in</a>
+        </p>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/register.js"></script>
+  </body>
+</html>

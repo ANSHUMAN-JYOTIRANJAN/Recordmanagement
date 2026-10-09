@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Initial Staff Setup - Student Academic Record System</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <style>
+      .setup-page {
+        min-height: calc(100vh - 75px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5f7fb;
+        padding: 40px 20px;
+      }
+
+      .setup-card {
+        width: 100%;
+        max-width: 450px;
+        background: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .setup-card h1 {
+        text-align: center;
+        color: #1e3a8a;
+        margin-bottom: 8px;
+      }
+
+      .setup-card .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 25px;
+      }
+
+      .setup-card .form-group {
+        margin-bottom: 18px;
+      }
+
+      .setup-button {
+        width: 100%;
+        padding: 13px;
+        border: 0;
+        border-radius: 6px;
+        background: #1e3a8a;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .setup-button:disabled {
+        cursor: wait;
+        opacity: 0.7;
+      }
+
+      .setup-message {
+        display: none;
+        margin-top: 15px;
+        text-align: center;
+        color: #b91c1c;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="container">
+        <div class="logo">
+          <h2>Student Academic Record</h2>
+          <span>Management System</span>
+        </div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="login.html">Login</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="setup-page">
+      <section class="setup-card">
+        <h1>Initial Staff Setup</h1>
+        <p class="subtitle">
+          Create the first Academic Office account. This setup can only
+          succeed once.
+        </p>
+        <form id="staffSetupForm">
+          <div class="form-group">
+            <label for="setupSecret">Setup secret</label>
+            <input
+              id="setupSecret"
+              type="password"
+              autocomplete="off"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="name">Full name</label>
+            <input id="name" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password (at least 8 characters)</label>
+            <input
+              id="password"
+              type="password"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+          <button class="setup-button" type="submit">
+            Create Academic Office Account
+          </button>
+          <div id="staffSetupMessage" class="setup-message" role="alert"></div>
+        </form>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/staff-setup.js"></script>
+  </body>
+</html>

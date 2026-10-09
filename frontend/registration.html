@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Course Registration - Academic Record System</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f7fb;
+      }
+
+      /* ================================
+           LAYOUT
+        ================================= */
+
+      .page-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 240px;
+        background: #1e3a8a;
+        color: white;
+        padding: 25px 15px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .sidebar-logo {
+        text-align: center;
+        padding-bottom: 25px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .sidebar-logo h2 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      .sidebar-logo p {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+
+      .sidebar-menu {
+        margin-top: 25px;
+      }
+
+      .sidebar-menu a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 12px 15px;
+        margin-bottom: 6px;
+        border-radius: 6px;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background: #172554;
+      }
+
+      .logout-btn {
+        margin-top: 25px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid white;
+        border-radius: 6px;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+      }
+
+      /* ================================
+           MAIN
+        ================================= */
+
+      .page-main {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+        padding: 30px;
+      }
+
+      .page-header {
+        background: white;
+        padding: 22px 25px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .page-header h1 {
+        margin: 0 0 6px;
+        color: #1e3a8a;
+      }
+
+      .page-header p {
+        margin: 0;
+        color: #6b7280;
+      }
+
+      /* ================================
+           STUDENT INFORMATION
+        ================================= */
+
+      .student-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+
+      .student-info label {
+        display: block;
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 5px;
+      }
+
+      .student-info strong {
+        color: #111827;
+      }
+
+      .student-info input {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+      }
+
+      /* ================================
+           SEMESTER SELECT
+        ================================= */
+
+      .semester-section {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .semester-section label {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .semester-section select,
+      .semester-section input {
+        padding: 10px 15px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        min-width: 180px;
+      }
+
+      /* ================================
+           COURSE CARDS
+        ================================= */
+
+      .section-title {
+        color: #1e3a8a;
+        margin-bottom: 15px;
+      }
+
+      .course-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .course-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid #1e3a8a;
+      }
+
+      .course-card h3 {
+        margin: 0 0 8px;
+        color: #111827;
+      }
+
+      .course-number {
+        color: #1e3a8a;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .course-card p {
+        color: #6b7280;
+        margin: 7px 0;
+      }
+
+      .course-card .credits {
+        font-weight: bold;
+        color: #374151;
+      }
+
+      .register-course-btn {
+        margin-top: 12px;
+        padding: 9px 15px;
+        border: none;
+        border-radius: 6px;
+        background: #1e3a8a;
+        color: white;
+        cursor: pointer;
+      }
+
+      .register-course-btn:hover {
+        background: #172554;
+      }
+
+      .registered {
+        background: #16a34a;
+      }
+
+      .registered:hover {
+        background: #15803d;
+      }
+
+      /* ================================
+           REGISTERED COURSES
+        ================================= */
+
+      .registered-section {
+        margin-top: 30px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .registration-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .registration-table th,
+      .registration-table td {
+        padding: 13px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+      }
+
+      .registration-table th {
+        background: #f8fafc;
+        color: #374151;
+      }
+
+      .remove-btn {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 5px;
+        background: #fee2e2;
+        color: #991b1b;
+        cursor: pointer;
+      }
+
+      /* ================================
+           SUMMARY
+        ================================= */
+
+      .registration-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .credit-summary {
+        font-size: 16px;
+      }
+
+      .confirm-btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        background: #16a34a;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .confirm-btn:hover {
+        background: #15803d;
+      }
+
+      /* ================================
+           RESPONSIVE
+        ================================= */
+
+      @media (max-width: 900px) {
+        .course-container {
+          grid-template-columns: 1fr;
+        }
+
+        .student-card {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 700px) {
+        .sidebar {
+          position: relative;
+          width: 100%;
+        }
+
+        .page-layout {
+          display: block;
+        }
+
+        .page-main {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .student-card {
+          grid-template-columns: 1fr;
+        }
+
+        .registration-summary {
+          flex-direction: column;
+          gap: 15px;
+          align-items: stretch;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-layout">
+      <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <h2>Academic Record</h2>
+
+          <p>Management System</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="dashboard.html"> Dashboard </a>
+
+          <a href="students.html"> Students </a>
+
+          <a href="courses.html"> Courses </a>
+
+          <a href="registration.html" class="active"> Registration </a>
+
+          <a href="marks.html"> Marks </a>
+
+          <a href="swa.html"> SWA Calculation </a>
+
+          <a href="reports.html"> Academic Reports </a>
+        </nav>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </aside>
+
+      <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+      <main class="page-main">
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+          <h1>Course Registration</h1>
+
+          <p>Register courses for the selected academic semester.</p>
+        </div>
+
+        <!-- =====================================
+             STUDENT INFORMATION
+        ====================================== -->
+
+        <div class="student-card">
+          <div class="student-info">
+            <label>Student Name</label>
+
+            <strong id="studentName">-</strong>
+          </div>
+
+          <div class="student-info">
+            <label>Roll Number</label>
+
+            <input id="rollNumber" type="text" placeholder="Enter roll number" />
+          </div>
+
+          <div class="student-info">
+            <label>Current Semester</label>
+
+            <strong id="currentSemester">-</strong>
+          </div>
+
+          <div class="student-info">
+            <label>Registration Status</label>
+
+            <strong id="registrationStatus"> Open </strong>
+          </div>
+        </div>
+
+        <!-- =====================================
+             SEMESTER
+        ====================================== -->
+
+        <div class="semester-section">
+          <label for="semester"> Select Semester: </label>
+
+          <select id="semester">
+            <option value="1">Semester 1</option>
+
+            <option value="2">Semester 2</option>
+
+            <option value="3" selected>Semester 3</option>
+
+            <option value="4">Semester 4</option>
+
+            <option value="5">Semester 5</option>
+
+            <option value="6">Semester 6</option>
+
+            <option value="7">Semester 7</option>
+
+            <option value="8">Semester 8</option>
+          </select>
+          <label for="academicYear">Academic Year:</label>
+          <input type="text" id="academicYear" value="2026-27" />
+        </div>
+
+        <!-- =====================================
+             AVAILABLE COURSES
+        ====================================== -->
+
+        <h2 class="section-title">Available Courses</h2>
+
+        <div class="course-container" id="availableCourses"><p>Loading courses...</p></div>
+
+        <!-- =====================================
+             REGISTERED COURSES
+        ====================================== -->
+
+        <div class="registered-section">
+          <h2 class="section-title">Registered Courses</h2>
+
+          <table class="registration-table">
+            <thead>
+              <tr>
+                <th>Course No.</th>
+
+                <th>Course Name</th>
+
+                <th>Credits</th>
+
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="registeredCoursesBody">
+              <tr id="emptyRow">
+                <td colspan="4" style="text-align: center; color: #6b7280">
+                  No courses registered yet.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- SUMMARY -->
+
+          <div class="registration-summary">
+            <div class="credit-summary">
+              Total Registered Credits:
+
+              <strong id="totalCredits"> 0 </strong>
+            </div>
+
+            <button class="confirm-btn" onclick="confirmRegistration()">
+              Confirm Registration
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+    
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

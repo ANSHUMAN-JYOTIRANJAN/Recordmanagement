@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Marks Management - Academic Record System</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f7fb;
+      }
+
+      /* ================================
+           LAYOUT
+        ================================= */
+
+      .page-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 240px;
+        background: #1e3a8a;
+        color: white;
+        padding: 25px 15px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .sidebar-logo {
+        text-align: center;
+        padding-bottom: 25px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .sidebar-logo h2 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      .sidebar-logo p {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+
+      .sidebar-menu {
+        margin-top: 25px;
+      }
+
+      .sidebar-menu a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 12px 15px;
+        margin-bottom: 6px;
+        border-radius: 6px;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background: #172554;
+      }
+
+      .logout-btn {
+        margin-top: 25px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid white;
+        border-radius: 6px;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+      }
+
+      /* ================================
+           MAIN CONTENT
+        ================================= */
+
+      .page-main {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+        padding: 30px;
+      }
+
+      .page-header {
+        background: white;
+        padding: 22px 25px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .page-header h1 {
+        color: #1e3a8a;
+        margin: 0 0 6px;
+      }
+
+      .page-header p {
+        color: #6b7280;
+        margin: 0;
+      }
+
+      /* ================================
+           SELECTION CARD
+        ================================= */
+
+      .selection-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .selection-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+        color: #374151;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        outline: none;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: #1e3a8a;
+      }
+
+      .load-btn {
+        margin-top: 25px;
+        padding: 11px 20px;
+        border: none;
+        border-radius: 6px;
+        background: #1e3a8a;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      /* ================================
+           STUDENT INFO
+        ================================= */
+
+      .student-info-card {
+        display: none;
+        background: #eff6ff;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .student-info-card p {
+        margin: 6px 0;
+      }
+
+      /* ================================
+           MARKS TABLE
+        ================================= */
+
+      .marks-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+      }
+
+      .marks-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .marks-table th,
+      .marks-table td {
+        padding: 13px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+      }
+
+      .marks-table th {
+        background: #f8fafc;
+        color: #374151;
+      }
+
+      .marks-table input {
+        width: 100px;
+        padding: 8px;
+        border: 1px solid #d1d5db;
+        border-radius: 5px;
+      }
+
+      .marks-table input:focus {
+        outline: none;
+        border-color: #1e3a8a;
+      }
+
+      /* ================================
+           GRADE
+        ================================= */
+
+      .grade {
+        font-weight: bold;
+      }
+
+      .grade-a {
+        color: #15803d;
+      }
+
+      .grade-b {
+        color: #2563eb;
+      }
+
+      .grade-c {
+        color: #ca8a04;
+      }
+
+      .grade-f {
+        color: #dc2626;
+      }
+
+      /* ================================
+           SUMMARY
+        ================================= */
+
+      .summary-card {
+        margin-top: 20px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .summary-item {
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 7px;
+      }
+
+      .summary-item span {
+        display: block;
+        color: #6b7280;
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+
+      .summary-item strong {
+        font-size: 20px;
+        color: #1e3a8a;
+      }
+
+      /* ================================
+           SAVE BUTTON
+        ================================= */
+
+      .save-section {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .save-btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 6px;
+        background: #16a34a;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .save-btn:hover {
+        background: #15803d;
+      }
+
+      /* ================================
+           MESSAGE
+        ================================= */
+
+      .message {
+        display: none;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      /* ================================
+           RESPONSIVE
+        ================================= */
+
+      @media (max-width: 900px) {
+        .selection-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .sidebar {
+          position: relative;
+          width: 100%;
+        }
+
+        .page-layout {
+          display: block;
+        }
+
+        .page-main {
+          margin-left: 0;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-layout">
+      <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <h2>Academic Record</h2>
+
+          <p>Management System</p>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="dashboard.html"> Dashboard </a>
+
+          <a href="students.html"> Students </a>
+
+          <a href="courses.html"> Courses </a>
+
+          <a href="registration.html"> Registration </a>
+
+          <a href="marks.html" class="active"> Marks </a>
+
+          <a href="swa.html"> SWA Calculation </a>
+
+          <a href="reports.html"> Academic Reports </a>
+        </nav>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </aside>
+
+      <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+      <main class="page-main">
+        <!-- HEADER -->
+
+        <div class="page-header">
+          <h1>Marks Management</h1>
+
+          <p>Enter, update and manage student marks for registered courses.</p>
+        </div>
+
+        <!-- =====================================
+             STUDENT / SEMESTER SELECTION
+        ====================================== -->
+
+        <div class="selection-card">
+          <div class="selection-grid">
+            <!-- Roll Number -->
+
+            <div class="form-group">
+              <label for="rollNumber"> Student Roll Number </label>
+
+              <input
+                type="text"
+                id="rollNumber"
+                placeholder="Example: 240102001"
+              />
+            </div>
+
+            <!-- Semester -->
+
+            <div class="form-group">
+              <label for="semester"> Semester </label>
+
+              <select id="semester">
+                <option value="">Select Semester</option>
+
+                <option value="1">Semester 1</option>
+
+                <option value="2">Semester 2</option>
+
+                <option value="3">Semester 3</option>
+
+                <option value="4">Semester 4</option>
+
+                <option value="5">Semester 5</option>
+
+                <option value="6">Semester 6</option>
+
+                <option value="7">Semester 7</option>
+
+                <option value="8">Semester 8</option>
+              </select>
+            </div>
+
+            <!-- Academic Year -->
+
+            <div class="form-group">
+              <label for="academicYear"> Academic Year </label>
+
+              <input type="text" id="academicYear" value="2026-27" />
+            </div>
+          </div>
+
+          <button class="load-btn" onclick="loadStudentMarks()">
+            Load Student
+          </button>
+        </div>
+
+        <!-- =====================================
+             MESSAGE
+        ====================================== -->
+
+        <div class="message" id="message">Marks loaded successfully.</div>
+
+        <!-- =====================================
+             STUDENT INFORMATION
+        ====================================== -->
+
+        <div class="student-info-card" id="studentInfo">
+          <p>
+            <strong>Student Name:</strong>
+            <span id="studentName"> - </span>
+          </p>
+
+          <p>
+            <strong>Roll Number:</strong>
+            <span id="displayRollNumber"> - </span>
+          </p>
+
+          <p>
+            <strong>Semester:</strong>
+            <span id="displaySemester"> - </span>
+          </p>
+        </div>
+
+        <!-- =====================================
+             MARKS TABLE
+        ====================================== -->
+
+        <div class="marks-card">
+          <h2 style="color: #1e3a8a">Course Marks</h2>
+
+          <table class="marks-table">
+            <thead>
+              <tr>
+                <th>Course No.</th>
+
+                <th>Course Name</th>
+
+                <th>Credits</th>
+
+                <th>Marks (100)</th>
+
+                <th>Grade</th>
+              </tr>
+            </thead>
+
+            <tbody id="marksTableBody"><tr><td colspan="5">Load a student to view marks.</td></tr></tbody>
+          </table>
+        </div>
+
+        <!-- =====================================
+             SUMMARY
+        ====================================== -->
+
+        <div class="summary-card">
+          <h2 style="color: #1e3a8a">Marks Summary</h2>
+
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span> Total Marks </span>
+
+              <strong id="totalMarks"> 0 </strong>
+            </div>
+
+            <div class="summary-item">
+              <span> Average Marks </span>
+
+              <strong id="averageMarks"> 0 </strong>
+            </div>
+
+            <div class="summary-item">
+              <span> Total Credits </span>
+
+              <strong id="totalCredits"> 15 </strong>
+            </div>
+          </div>
+
+          <div class="save-section">
+            <button class="save-btn" onclick="saveMarks()">Save Marks</button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+    
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

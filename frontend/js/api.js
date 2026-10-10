@@ -1,17 +1,19 @@
 (function () {
   const localHostnames = ["localhost", "127.0.0.1", "[::1]"];
+
   const isLocalFrontend =
     window.location.protocol === "file:" ||
     (localHostnames.includes(window.location.hostname) &&
       window.location.port !== "5000");
+
   const defaultApiBaseUrl = isLocalFrontend
     ? "http://localhost:5000/api"
-    : `${window.location.origin}/api`;
+    : "https://recordmanagement1.onrender.com/api";
+
   const apiBaseUrl = (window.API_BASE_URL || defaultApiBaseUrl).replace(
     /\/+$/,
     "",
   );
-
   async function apiRequest(path, options) {
     const requestOptions = options || {};
     const headers = new Headers(requestOptions.headers || {});

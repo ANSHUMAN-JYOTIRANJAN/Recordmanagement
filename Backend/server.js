@@ -1,24 +1,28 @@
+javascript;
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const path = require("path");
 
 const connectDB = require("./config/db");
 
-// Load environment variables
 dotenv.config();
 
-// Create Express app
 const app = express();
 
-// Connect MongoDB
-connectDB();
 
-// ==========================================
-// Middleware
-// ==========================================
 
-app.use(cors());
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 
@@ -32,51 +36,24 @@ app.get("/api/health", (req, res) => {
   res.json({
     success: true,
     message: "Backend is working",
-    database: "MongoDB",
   });
 });
 
-// ==========================================
-// Import Routes
-// ==========================================
-
 const authRoutes = require("./routes/authRoutes");
-
 const studentRoutes = require("./routes/studentRoutes");
-
 const courseRoutes = require("./routes/courseRoutes");
-
 const registrationRoutes = require("./routes/registrationRoutes");
-
 const marksRoutes = require("./routes/marksRoutes");
-
 const swaRoutes = require("./routes/swaRoutes");
-
 const reportRoutes = require("./routes/reportRoutes");
 
-// ==========================================
-// API Routes
-// ==========================================
-
 app.use("/api/auth", authRoutes);
-
 app.use("/api/students", studentRoutes);
-
 app.use("/api/courses", courseRoutes);
-
 app.use("/api/registrations", registrationRoutes);
-
 app.use("/api/marks", marksRoutes);
-
 app.use("/api/swa", swaRoutes);
-
 app.use("/api/reports", reportRoutes);
-
-app.use(express.static(path.join(__dirname, "..", "frontend")));
-
-// ==========================================
-// 404 Handler
-// ==========================================
 
 app.use((req, res) => {
   res.status(404).json({
@@ -84,10 +61,6 @@ app.use((req, res) => {
     message: `Route not found: ${req.method} ${req.originalUrl}`,
   });
 });
-
-// ==========================================
-// Global Error Handler
-// ==========================================
 
 app.use((err, req, res, next) => {
   console.error("Server Error:", err);
@@ -98,16 +71,21 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ==========================================
-// Start Server
-// ==========================================
-
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log("=========================================");
-  console.log(`Server running on port ${PORT}`);
-  console.log(`URL: http://localhost:${PORT}`);
-  console.log(`Health: http://localhost:${PORT}/api/health`);
-  console.log("=========================================");
-});
+async function startServer() {
+  try {
+    await connectDB();
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log(`Frontend URL: ${process.env.FRONTEND_URL}`);
+      console.log(`Health: /api/health`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
+    process.exit(1);
+  }
+}
+
+startServer();

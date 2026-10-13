@@ -40,6 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
     message.style.display = "block";
     message.classList.add("success");
     const role = document.getElementById("role");
-    if (role) role.value = "Student";
+    const registeredRole = params.get("role");
+    if (role) {
+      role.value = registeredRole || "Student";
+    }
   }
 });

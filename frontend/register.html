@@ -41,6 +41,10 @@
         margin-bottom: 18px;
       }
 
+      .register-card .form-group[hidden] {
+        display: none;
+      }
+
       .register-button {
         width: 100%;
         padding: 13px;
@@ -89,8 +93,16 @@
     <main class="register-page">
       <section class="register-card">
         <h1>Create Account</h1>
-        <p class="subtitle">Create a student account, then log in.</p>
+        <p class="subtitle">Choose an account type and create your account.</p>
         <form id="registerForm">
+          <div class="form-group">
+            <label for="role">Account type</label>
+            <select id="role" name="role" required>
+              <option value="Student">Student</option>
+              <option value="Faculty">Faculty</option>
+              <option value="Course Administrator">Course Administrator</option>
+            </select>
+          </div>
           <div class="form-group">
             <label for="name">Full name</label>
             <input id="name" name="name" autocomplete="name" required />
@@ -105,15 +117,15 @@
               required
             />
           </div>
-          <div class="form-group">
+          <div class="form-group student-only">
             <label for="rollNo">Student roll number</label>
-            <input id="rollNo" name="rollNo" autocomplete="off" required />
+            <input id="rollNo" name="rollNo" autocomplete="off" />
           </div>
-          <div class="form-group">
+          <div class="form-group student-only">
             <label for="address">Address (for a new student record)</label>
             <input id="address" name="address" autocomplete="street-address" />
           </div>
-          <div class="form-group">
+          <div class="form-group student-only">
             <label for="semester">Current semester (for a new student record)</label>
             <select id="semester" name="semester">
               <option value="">Select semester</option>
@@ -128,7 +140,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">Password (at least 8 characters for staff)</label>
             <input
               id="password"
               name="password"

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Student = require("../models/Student");
 const staffRoles = ["Academic Office", "Course Administrator", "Faculty"];
+const publicRegistrationRoles = ["Student", "Faculty", "Course Administrator"];
 
 // Generate JWT token
 const generateToken = (userId) => {
@@ -21,11 +22,19 @@ const registerUser = async (req, res) => {
     const body = req.body || {};
     const { name, email, password, rollNo, address, semester } =
       body;
+    const role = body.role || "Student";
     const normalizedEmail =
       typeof email === "string" ? email.trim().toLowerCase() : "";
     const normalizedRollNo =
       typeof rollNo === "string" ? rollNo.trim() : "";
     const semesterNumber = Number(semester);
+
+    if (!publicRegistrationRoles.includes(role)) {
+      return res.status(403).json({
+        success: false,
+        message: "Public registration is only available for student, faculty and course administrator accounts.",
+      });
+    }
 
     // Validate required account fields
     if (
@@ -33,19 +42,18 @@ const registerUser = async (req, res) => {
       !name.trim() ||
       !normalizedEmail ||
       typeof password !== "string" ||
-      !password ||
-      !normalizedRollNo
+      !password
     ) {
       return res.status(400).json({
         success: false,
-        message: "Name, email, password and roll number are required.",
+        message: "Name, email and password are required.",
       });
     }
 
-    if (body.role && body.role !== "Student") {
-      return res.status(403).json({
+    if (role !== "Student" && password.length < 8) {
+      return res.status(400).json({
         success: false,
-        message: "Public registration is only available for student accounts.",
+        message: "Password must be at least 8 characters long.",
       });
     }
 
@@ -58,6 +66,36 @@ const registerUser = async (req, res) => {
       return res.status(409).json({
         success: false,
         message: "A user with this email already exists.",
+      });
+    }
+
+    if (role !== "Student") {
+      const user = await User.create({
+        name: name.trim(),
+        email: normalizedEmail,
+        password: await bcrypt.hash(password, 10),
+        role,
+      });
+      const token = generateToken(user._id);
+
+      return res.status(201).json({
+        success: true,
+        message: "User registered successfully.",
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          rollNo: null,
+        },
+      });
+    }
+
+    if (!normalizedRollNo) {
+      return res.status(400).json({
+        success: false,
+        message: "Student roll number is required.",
       });
     }
 

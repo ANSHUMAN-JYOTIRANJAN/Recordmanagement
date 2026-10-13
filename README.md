@@ -229,7 +229,7 @@ The application supports the following roles:
 - **Course Administrator:** Manage authorized student and course operations.
 - **Academic Office:** Perform authorized academic record administration.
 
-Access is controlled by authentication middleware and role-based authorization middleware. Public registration should not allow users to assign themselves privileged roles.
+Access is controlled by authentication middleware and role-based authorization middleware. Public registration is available for Student, Faculty, and Course Administrator accounts. Academic Office accounts remain restricted to the initial setup process.
 
 ## 🚀 Deployment
 
@@ -257,7 +257,7 @@ Configure the backend environment variables in Render and ensure that `FRONTEND_
 
 Verify the following workflows:
 
-1. Register a student account and log in.
+1. Register as a student, faculty member, or course administrator and log in with the selected role.
 2. Confirm that unauthorized users cannot access restricted operations.
 3. Create and retrieve student records.
 4. Add courses with the correct credits.

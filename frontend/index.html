@@ -2,145 +2,216 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <meta
       name="description"
-      content="Student Academic Record Management System"
+      content="A clear, connected way to manage student records, courses, results and academic reports."
     />
-
     <title>Student Academic Record Management System</title>
-
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/home.css" />
   </head>
 
-  <body>
-    <!-- Header -->
-    <header class="main-header">
-      <div class="container">
-        <div class="logo">
-          <h2>Student Academic Record</h2>
-          <span>Management System</span>
-        </div>
+  <body class="home-page">
+    <header class="main-header home-header">
+      <div class="container home-header-inner">
+        <a class="home-brand" href="index.html" aria-label="Academic Records home">
+          <span class="brand-mark" aria-hidden="true">A</span>
+          <span class="brand-copy">
+            <strong>Academic Records</strong>
+            <span>Student management system</span>
+          </span>
+        </a>
 
-        <nav>
-          <a href="index.html">Home</a>
-          <a href="register.html">Create Account</a>
-          <a href="login.html">Login</a>
-          <a href="staff-setup.html">Initial Staff Setup</a>
+        <nav aria-label="Main navigation">
+          <a class="home-link active" href="index.html" aria-current="page">Home</a>
+          <a class="home-link" href="#features">Features</a>
+          <a class="home-link" href="register.html">Create account</a>
+          <a class="home-login" href="login.html">Log in <span aria-hidden="true">→</span></a>
         </nav>
       </div>
     </header>
 
-    <!-- Main Section -->
     <main>
-      <section class="hero">
-        <div class="hero-content">
-          <h1>Student Academic Record Management System</h1>
-
-          <p>
-            Manage student records, courses, registrations, marks, SWA and
-            academic reports in one system.
-          </p>
-
-          <div class="hero-buttons">
-            <a href="register.html" class="btn btn-primary"> Create Account </a>
-
-            <a href="login.html" class="btn btn-secondary"> Login </a>
+      <section class="home-hero">
+        <div class="hero-shape hero-shape-one" aria-hidden="true"></div>
+        <div class="hero-shape hero-shape-two" aria-hidden="true"></div>
+        <div class="container hero-layout">
+          <div class="hero-copy">
+            <span class="eyebrow"><span></span> YOUR ACADEMIC JOURNEY, IN ONE PLACE</span>
+            <h1>Every achievement has a <span>record.</span></h1>
+            <p>
+              A simpler way to manage student records, courses and results.
+              Keep the important details connected, from registration to report.
+            </p>
+            <div class="hero-actions">
+              <a class="home-button primary-button" href="register.html">
+                Get started <span aria-hidden="true">→</span>
+              </a>
+              <a class="home-button text-button" href="login.html">
+                Sign in to your account
+              </a>
+            </div>
+            <p class="staff-note">
+              Setting up staff access?
+              <a href="staff-setup.html">Create the initial Academic Office account</a>.
+              A server setup secret is required.
+            </p>
           </div>
-          <p>
-            Setting up staff access for the first time?
-            <a href="staff-setup.html">Create the initial Academic Office account</a>.
-            A server setup secret is required.
-          </p>
+
+          <div class="hero-art" aria-label="An overview of connected academic records">
+            <div class="art-orbit orbit-one"></div>
+            <div class="art-orbit orbit-two"></div>
+            <div class="record-board">
+              <div class="board-topline">
+                <span class="board-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+                    <path d="M8 7h8M8 11h8" />
+                  </svg>
+                </span>
+                <span class="board-menu" aria-hidden="true">•••</span>
+              </div>
+              <span class="board-label">ACADEMIC RECORDS</span>
+              <h2>Progress, made clear.</h2>
+              <p>Everything connected across the academic journey.</p>
+              <div class="board-divider"></div>
+              <div class="record-row">
+                <span class="record-icon students-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </span>
+                <span><strong>Student profiles</strong><small>Records &amp; details</small></span>
+                <span class="row-arrow" aria-hidden="true">↗</span>
+              </div>
+              <div class="record-row">
+                <span class="record-icon courses-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="m12 3 9 5-9 5-9-5 9-5ZM5 10.5V16l7 4 7-4v-5.5M21 8v6" />
+                  </svg>
+                </span>
+                <span><strong>Courses &amp; results</strong><small>Registration &amp; marks</small></span>
+                <span class="row-arrow" aria-hidden="true">↗</span>
+              </div>
+              <div class="record-row">
+                <span class="record-icon reports-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8ZM14 2v6h6M8 13h8M8 17h8" />
+                  </svg>
+                </span>
+                <span><strong>Academic reports</strong><small>Standing &amp; summaries</small></span>
+                <span class="row-arrow" aria-hidden="true">↗</span>
+              </div>
+            </div>
+            <div class="art-sparkle sparkle-one" aria-hidden="true">✳</div>
+            <div class="art-sparkle sparkle-two" aria-hidden="true">✳</div>
+          </div>
+        </div>
+        <div class="hero-bottom container">
+          <span>BUILT AROUND THE STUDENT JOURNEY</span>
+          <div><i></i> Records <b>·</b> Courses <b>·</b> Results <b>·</b> Reports</div>
         </div>
       </section>
 
-      <!-- Features -->
-      <section class="features">
+      <section class="home-features" id="features">
         <div class="container">
-          <h2>System Features</h2>
-
-          <div class="feature-grid">
-            <div class="feature-card">
-              <h3>Student Management</h3>
-
-              <p>
-                Maintain student roll number, address, semester and academic
-                details.
-              </p>
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow section-eyebrow">A MORE CONNECTED CAMPUS</span>
+              <h2>All the essentials.<br /><span>Working together.</span></h2>
             </div>
-
-            <div class="feature-card">
-              <h3>Course Management</h3>
-
-              <p>
-                Create and manage courses, credits and syllabus information.
-              </p>
-            </div>
-
-            <div class="feature-card">
-              <h3>Course Registration</h3>
-
-              <p>Register students for courses during the current semester.</p>
-            </div>
-
-            <div class="feature-card">
-              <h3>Marks Management</h3>
-
-              <p>Enter and manage student marks for registered courses.</p>
-            </div>
-
-            <div class="feature-card">
-              <h3>SWA Calculation</h3>
-
-              <p>
-                Calculate Semester Weighted Average using marks and credit
-                points.
-              </p>
-            </div>
-
-            <div class="feature-card">
-              <h3>Academic Reports</h3>
-
-              <p>Generate, view and print student academic reports.</p>
-            </div>
+            <p>
+              The tools to keep academic information organized and make each
+              step easier to follow.
+            </p>
+          </div>
+          <div class="home-feature-grid">
+            <article class="home-feature-card">
+              <span class="feature-number">01</span>
+              <span class="feature-icon feature-blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </span>
+              <h3>Student records</h3>
+              <p>Keep student details, roll numbers and semester information together.</p>
+              <a href="students.html" aria-label="Explore student records">Explore <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="home-feature-card">
+              <span class="feature-number">02</span>
+              <span class="feature-icon feature-green" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="m12 3 9 5-9 5-9-5 9-5ZM5 10.5V16l7 4 7-4v-5.5M21 8v6" />
+                </svg>
+              </span>
+              <h3>Courses &amp; registration</h3>
+              <p>Manage course information and student registrations by semester.</p>
+              <a href="courses.html" aria-label="Explore courses">Explore <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="home-feature-card">
+              <span class="feature-number">03</span>
+              <span class="feature-icon feature-gold" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 19V5M4 19h17M8 15l4-4 3 2 5-6M17 7h3v3" />
+                </svg>
+              </span>
+              <h3>Marks &amp; SWA</h3>
+              <p>Record marks and calculate Semester Weighted Average from course credits.</p>
+              <a href="swa.html" aria-label="Explore SWA calculation">Explore <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="home-feature-card">
+              <span class="feature-number">04</span>
+              <span class="feature-icon feature-violet" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8ZM14 2v6h6M8 13h8M8 17h8" />
+                </svg>
+              </span>
+              <h3>Academic reports</h3>
+              <p>Bring academic results and standing together in clear reports.</p>
+              <a href="reports.html" aria-label="Explore academic reports">Explore <span aria-hidden="true">→</span></a>
+            </article>
           </div>
         </div>
       </section>
 
-      <!-- Academic Standing -->
-      <section class="standing-section">
-        <div class="container">
-          <h2>Academic Standing</h2>
-
-          <div class="standing-grid">
-            <div class="standing-card">
-              <h3>Vice-Chancellor's List</h3>
-
-              <p>Students with SWA of 85 or higher.</p>
-            </div>
-
-            <div class="standing-card">
-              <h3>Normal Academic Standing</h3>
-
-              <p>Students with SWA between 50 and 85.</p>
-            </div>
-
-            <div class="standing-card">
-              <h3>Conditional Standing</h3>
-
-              <p>Students with SWA below 50.</p>
-            </div>
+      <section class="home-standing">
+        <div class="container standing-layout">
+          <div class="standing-intro">
+            <span class="eyebrow section-eyebrow">A CLEARER VIEW OF PROGRESS</span>
+            <h2>Academic standing,<br /><span>at a glance.</span></h2>
+            <p>Understand how Semester Weighted Average reflects academic performance.</p>
+          </div>
+          <div class="standing-list">
+            <article class="standing-item">
+              <span class="standing-dot distinction"></span>
+              <span class="standing-copy"><strong>Vice-Chancellor’s List</strong><small>Recognizing exceptional academic achievement</small></span>
+              <strong class="standing-range">85+ SWA</strong>
+            </article>
+            <article class="standing-item">
+              <span class="standing-dot normal"></span>
+              <span class="standing-copy"><strong>Normal academic standing</strong><small>Continuing steady academic progress</small></span>
+              <strong class="standing-range">50–&lt;85 SWA</strong>
+            </article>
+            <article class="standing-item">
+              <span class="standing-dot conditional"></span>
+              <span class="standing-copy"><strong>Conditional standing</strong><small>Additional academic attention may be needed</small></span>
+              <strong class="standing-range">Below 50 SWA</strong>
+            </article>
           </div>
         </div>
       </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="main-footer">
-      <p>&copy; 2026 Student Academic Record Management System</p>
+    <footer class="home-footer">
+      <div class="container footer-inner">
+        <a class="home-brand footer-brand" href="index.html" aria-label="Academic Records home">
+          <span class="brand-mark" aria-hidden="true">A</span>
+          <span class="brand-copy"><strong>Academic Records</strong><span>Student management system</span></span>
+        </a>
+        <p>&copy; 2026 Student Academic Record Management System</p>
+        <a class="footer-login" href="login.html">Sign in <span aria-hidden="true">→</span></a>
+      </div>
     </footer>
   </body>
 </html>

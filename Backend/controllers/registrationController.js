@@ -274,13 +274,20 @@ const confirmRegistration = async (req, res) => {
       });
     }
 
+    if (req.user.role === "Student") {
+      return res.status(403).json({
+        success: false,
+        message: "Students cannot confirm registrations.",
+      });
+    }
+
     if (
       !registration.student ||
-      !canAccessStudentRegistration(req.user, registration.student.rollNo)
+      !registrationStaffRoles.includes(req.user.role)
     ) {
       return res.status(403).json({
         success: false,
-        message: "You can only confirm your own course registration.",
+        message: "Only staff can confirm course registrations.",
       });
     }
 

@@ -445,6 +445,14 @@
       : "Open";
     $("totalCredits").textContent =
       (registration && registration.totalCredits) || 0;
+
+    const confirmButton = $("confirmRegistrationButton");
+    if (confirmButton) {
+      const currentUser = window.getCurrentUser && window.getCurrentUser();
+      const isStudent = Boolean(currentUser && currentUser.role === "Student");
+      confirmButton.style.display = isStudent ? "none" : "inline-block";
+      confirmButton.disabled = isStudent;
+    }
   }
 
   function selectedRegistrationCourseIds() {
@@ -491,6 +499,15 @@
   }
 
   async function confirmRegistration() {
+    const currentUser = window.getCurrentUser && window.getCurrentUser();
+    if (currentUser && currentUser.role === "Student") {
+      showMessage(
+        "message",
+        "Student accounts cannot confirm registrations from the student portal.",
+        true,
+      );
+      return;
+    }
     if (!registration) {
       showMessage("message", "Register at least one course first.", true);
       return;

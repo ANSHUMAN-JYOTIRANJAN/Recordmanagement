@@ -40,7 +40,12 @@ router.post("/", protect, createRegistration);
 // Confirm Registration
 // PUT /api/registrations/:registrationId/confirm
 // ==========================================
-router.put("/:registrationId/confirm", protect, confirmRegistration);
+router.put(
+  "/:registrationId/confirm",
+  protect,
+  authorizeRoles("Faculty", "Academic Office", "Course Administrator"),
+  confirmRegistration,
+);
 
 // ==========================================
 // Delete Registration
